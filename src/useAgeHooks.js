@@ -12,18 +12,36 @@ export function useAgeHooks() {
     let [outday, setoutday] = useState(0);
     let [outmonth, setoutmonth] = useState(0);
     let [outyear, setoutyear] = useState(0);
+    let [bcount, setbcount] = useState(0);
+    let [mount, setmount] = useState(false);
+    let [zodiacimage, setzodiacimage] = useState(" ");
+    let [zodiacname, setzodiacname] = useState(" ");
+    let [zdisplay, setzdisplay] = useState(false);
 
     useEffect(
         () => {
-            incount.current = incount.current + 1
-            console.log("incount", incount.current)
+            if (day > 0 || month > 0 || year > 0) {
+                incount.current = incount.current + 1;
+                setbcount(() => incount.current);
+            }
         }
         , [outday, outmonth, outyear]
     )
 
+    useEffect(
+        () => {
+            if (!mount) {
+                console.log("Mounted for the first time!")
+                setmount(true);
+            }
+        }
+        , []
+    )
+
     return {
         day, setday, month, setmonth, year, setyear, inp, showout,
-        setshowout, outday, setoutday, outmonth, setoutmonth, outyear, setoutyear
+        setshowout, outday, setoutday, outmonth, setoutmonth, outyear, setoutyear, bcount,
+        zodiacimage, setzodiacimage, zodiacname, setzodiacname, zdisplay, setzdisplay
     }
 }
 

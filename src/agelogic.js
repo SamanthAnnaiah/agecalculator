@@ -1,4 +1,4 @@
-import { day_seconds, year_seconds, monthsdays, curdate, curday, curmonth, curyear } from './agecopybook';
+import { day_seconds, year_seconds, monthsdays, curdate, curday, curmonth, curyear, zodiacs } from './agecopybook';
 
 function gettotalseconds(curday, curmonth, curyear) {
     if (curyear % 4 === 0) {
@@ -14,14 +14,9 @@ function gettotalseconds(curday, curmonth, curyear) {
 function gettotalmonths(rem_days, month) {
     let minusmonths = 0;
     let minusdays = 0;
-    console.log(day_seconds);
-    console.log(curday);
-    console.log(curmonth);
     if (month < curmonth) {
         let narray = monthsdays.filter((item, index) => (index >= month - 1) && (index <= curmonth - 1));
-        console.log(narray);
         let sarray = narray.reduce(((acc, item) => acc + item), 0)
-        console.log(sarray);
         if (sarray > rem_days) {
             minusmonths = narray.length - 1;
             minusdays = narray.pop();
@@ -46,7 +41,6 @@ function gettotalmonths(rem_days, month) {
         let carray = monthsdays.filter((item, index) => (index >= 0) && (index <= curmonth - 1));
         let narray = [...barray, ...carray];
         let sarray = narray.reduce(((acc, item) => acc + item), 0)
-        console.log(sarray);
         if (sarray > rem_days) {
             minusmonths = narray.length - 1;
             minusdays = narray.pop();
@@ -64,4 +58,9 @@ function gettotalmonths(rem_days, month) {
     return [minusmonths, minusdays];
 }
 
-export { gettotalmonths, gettotalseconds };
+function getzodiac(ager) {
+    let out = zodiacs.filter((item, index) => (Number(ager) >= Number(item.range[0])) && (Number(ager) <= Number(item.range[1])));
+    return ([`/${out[0].zname}.png`, out[0].zname]);
+}
+
+export { gettotalmonths, gettotalseconds, getzodiac };

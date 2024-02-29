@@ -118,6 +118,23 @@ div.liner {
   font-family: "ppei";
 }
 
+.output_mes {
+  font-size: 12px;
+  margin-top: 30px;
+  color: hsl(259, 100%, 65%);
+  font-family: "ppb";
+}
+
+.posit {
+  position: fixed;
+  top: 50%;
+  left: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Specific styles */
 
 .day,
@@ -134,4 +151,12 @@ div.liner {
 
 .pointer {
   cursor: pointer;
+}
+
+.fmedium {
+  font-size: 30px;
+}
+
+.mmedium {
+  margin: -4px;
 }

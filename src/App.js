@@ -3,7 +3,7 @@ import { Imager } from './Imager';
 import './ageStyle.css';
 import { useRef, useState } from 'react';
 import { AgeInput } from './AgeInput';
-import { gettotalmonths, gettotalseconds } from './agelogic';
+import { gettotalmonths, gettotalseconds, getzodiac } from './agelogic';
 import { useAgeHooks } from './useAgeHooks';
 import { day_seconds, year_seconds, monthsdays, curdate, curday, curmonth, curyear } from './agecopybook';
 
@@ -11,26 +11,33 @@ function App() {
 
   let {
     day, setday, month, setmonth, year, setyear, inp, showout,
-    setshowout, outday, setoutday, outmonth, setoutmonth, outyear, setoutyear
+    setshowout, outday, setoutday, outmonth, setoutmonth, outyear, setoutyear, bcount,
+    zodiacimage, setzodiacimage, zodiacname, setzodiacname, zdisplay, setzdisplay
   } = useAgeHooks();
 
   function Handleagecalc() {
-
+    if (day === 0 || month === 0 || year === 0) {
+      return;
+    }
     let curyear_total = gettotalseconds(curday, curmonth, curyear);
     let birthyear_total = gettotalseconds(day, month, year);
     let ageseconds = curyear_total - birthyear_total;
     let oyear = parseInt(ageseconds / year_seconds);
 
     let rem_days = parseInt((ageseconds % year_seconds) / day_seconds);
-    console.log(rem_days);
     let [omonths, odays] = gettotalmonths(rem_days, month);
+    console.log(day.toString().padStart(2, "0").concat(month.toString().padStart(2, "0")));
+    let [zimage, zname] = getzodiac(month.toString().padStart(2, "0").concat(day.toString().padStart(2, "0")));
 
+    setzdisplay(true);
+    setzodiacimage(zimage);
+    setzodiacname(zname);
     setshowout(true);
     setoutday(odays);
     setoutmonth(omonths);
     setoutyear(oyear);
 
-    return ([parseInt(omonths), parseInt(odays)]);
+    // return ([parseInt(omonths), parseInt(odays)]);
   }
 
   return (
@@ -71,7 +78,20 @@ function App() {
               &nbsp;
               <span className='output_label'>days</span>
             </div>
+            <div>
+              <span className='output_mes'>{bcount}</span>
+              &nbsp;
+              <span className='output_mes'>Birth Date counts</span>
+            </div>
           </article>)}
+        {zdisplay && <div className='output_label fmedium mmedium posit'>
+          <div className='mmedium'>
+            <Imager source={zodiacimage} alternate={"image of a zodiac sign"} wd={"100px"} ht={"100px"} />
+          </div>
+          <div className='mmedium'>
+            <span>{zodiacname}</span>
+          </div>
+        </div>}
       </div>
     </>
   );
