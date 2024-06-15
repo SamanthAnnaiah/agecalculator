@@ -21,21 +21,15 @@ export function useAgeHooks() {
     useEffect(
         () => {
             if (day > 0 || month > 0 || year > 0) {
+                console.log("continue mounting");
                 incount.current = incount.current + 1;
                 setbcount(() => incount.current);
             }
+            return (() => {
+                console.log("clean up")
+            })
         }
         , [outday, outmonth, outyear]
-    )
-
-    useEffect(
-        () => {
-            if (!mount) {
-                console.log("Mounted for the first time!")
-                setmount(true);
-            }
-        }
-        , []
     )
 
     return {

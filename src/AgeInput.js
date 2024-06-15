@@ -1,5 +1,5 @@
 import './ageStyle.css';
-export function AgeInput({ intype, min, max, size, refer = null, day, setday }) {
+export function AgeInput({ intype, min, max, size, refer = null, day = 0, setday = "" }) {
 
     function Handleinchanger(event) {
         inchanger(event.target.value, min, max, size)

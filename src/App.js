@@ -1,13 +1,17 @@
 import { LabelHead } from './LabelHead';
 import { Imager } from './Imager';
 import './ageStyle.css';
-import { useRef, useState } from 'react';
 import { AgeInput } from './AgeInput';
 import { gettotalmonths, gettotalseconds, getzodiac } from './agelogic';
 import { useAgeHooks } from './useAgeHooks';
 import { day_seconds, year_seconds, monthsdays, curdate, curday, curmonth, curyear } from './agecopybook';
+import { Age } from './features/age/age';
+import { Person } from './features/person/person';
+import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
+
+  let agereducer = useSelector(store => store.agereducer);
 
   let {
     day, setday, month, setmonth, year, setyear, inp, showout,
@@ -26,7 +30,7 @@ function App() {
 
     let rem_days = parseInt((ageseconds % year_seconds) / day_seconds);
     let [omonths, odays] = gettotalmonths(rem_days, month);
-    console.log(day.toString().padStart(2, "0").concat(month.toString().padStart(2, "0")));
+    // console.log(day.toString().padStart(2, "0").concat(month.toString().padStart(2, "0")));
     let [zimage, zname] = getzodiac(month.toString().padStart(2, "0").concat(day.toString().padStart(2, "0")));
 
     setzdisplay(true);
@@ -43,6 +47,10 @@ function App() {
   return (
     <>
       <div className='age-calculator'>
+        <div className='liner'>
+          <Age />
+          <Person />
+        </div>
         <div className='sub_1'>
           <div>
             <LabelHead label={"BIRTH DAY"} />
@@ -57,9 +65,12 @@ function App() {
             <AgeInput intype={"number"} min={1} max={2024} size={4} day={year} setday={setyear} />
           </div>
         </div>
+        <div>
+          {agereducer.agetoadd}
+        </div>
         <div className='liner'>
           <hr />
-          <Imager source={"/tempsearch.png"} alternate={"image of a button"} wd={"80px"} ht={"90px"} agecalc={Handleagecalc} />
+          <Imager source={"/tempsearch.png"} alternate={"image of a button"} wd={"40px"} ht={"40px"} agecalc={Handleagecalc} />
         </div>
         {showout && (
           <article>
