@@ -24,7 +24,7 @@ export function Age() {
                 <LabelHead label={agereducer.agetoadd} />
             </div>
             <div className="mtp1">
-                <div className='button-3' onClick={() => dispatch(setmillenial(0))}>
+                <div className='button-3' onClick={() => dispatch(setmillenial(10))}>
                     Millenial
                 </div>
                 <LabelHead label={agereducer.agetoadd} />
